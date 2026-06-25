@@ -16,7 +16,6 @@ body {
   justify-content: center;
   padding: 40px;
   position: relative;
-  transition: background-color 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .disc {
@@ -97,17 +96,6 @@ function centerY() { return window.innerHeight / 2; }
 
 function getRandomIdleTimeout() {
   return 5000 + Math.random() * 25000;
-}
-
-function goDark() {
-  body.style.backgroundColor = '#444';
-}
-
-function goLight() {
-  body.style.transition = 'none';
-  body.style.backgroundColor = '#fff';
-  body.offsetHeight; // force reflow
-  body.style.transition = 'background-color 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
 }
 
 class Ant {
@@ -305,14 +293,12 @@ function onActivity() {
     isIdle = false;
     clearTimeout(idleTimer);
     clearTimeout(spawnTimer);
-    goLight();
     ants.forEach(ant => ant.retreat());
   }
 
   clearTimeout(idleTimer);
   idleTimer = setTimeout(() => {
     isIdle = true;
-    goDark();
     startEmergence();
   }, getRandomIdleTimeout());
 }
