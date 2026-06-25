@@ -16,28 +16,40 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body {
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
   height: 100%;
   background: var(--ink);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: 40px;
   position: relative;
 }
 
 .signature {
   position: absolute;
-  bottom: 10px;
-  right: 16px;
-  font-family: "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.05em;
-  color: var(--cream);
-  opacity: 0.18;
-  pointer-events: none;
   user-select: none;
+  display: block;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.signature img {
+  height: 20px;
+  width: auto;
+  display: block;
+  opacity: 0.18;
+  transition: opacity 0.3s ease;
+}
+
+.signature:hover img {
+  opacity: 0.5;
 }
 
 #grid {
@@ -59,15 +71,17 @@ html, body {
 </head>
 <body>
 <div id="grid"></div>
-<span class="signature">シャラン＋ハウンド</span>
+<a href="https://github.com/sharan01x/art" target="_blank" rel="noopener noreferrer" class="signature">
+  <img src="signature.png" alt="Sharan + Hound">
+</a>
 
 <script>
 const grid = document.getElementById('grid');
 const GAP = 8;
 const TARGET_CELL = 88;
 
-const availableW = window.innerWidth - 64;
-const availableH = window.innerHeight - 64;
+const availableW = window.innerWidth - 80;
+const availableH = window.innerHeight - 80;
 
 const COLS = Math.max(6, Math.floor((availableW + GAP) / (TARGET_CELL + GAP)));
 const ROWS = Math.max(6, Math.floor((availableH + GAP) / (TARGET_CELL + GAP)));
@@ -84,6 +98,30 @@ grid.style.width = gridW + 'px';
 grid.style.height = gridH + 'px';
 grid.style.gridTemplateColumns = `repeat(${COLS}, ${cellSize}px)`;
 grid.style.gridTemplateRows = `repeat(${ROWS}, ${cellSize}px)`;
+
+const signature = document.querySelector('.signature');
+
+function positionSignature() {
+  const gridRect = grid.getBoundingClientRect();
+  const bodyRect = document.body.getBoundingClientRect();
+  const sigWidth = signature.offsetWidth || 191;
+  const left = gridRect.right - bodyRect.left - sigWidth;
+  const top = gridRect.bottom - bodyRect.top + 15;
+  signature.style.left = left + 'px';
+  signature.style.top = top + 'px';
+}
+
+// Initial position after grid is rendered
+positionSignature();
+
+// Reposition after image loads so offsetWidth is correct
+const sigImg = signature.querySelector('img');
+if (sigImg) {
+  sigImg.onload = positionSignature;
+  if (sigImg.complete) positionSignature();
+}
+window.addEventListener('load', positionSignature);
+window.addEventListener('resize', positionSignature);
 
 const MAX_MERGE = Math.max(COLS, ROWS) >= 20 ? 3 : 2;
 
