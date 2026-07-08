@@ -38,4 +38,12 @@ But they do not trust easily. Shift in your chair, tap a key, clap your hands �
 
 ---
 
+## inurface
+
+🔗 [Open `inurface`](https://github.com/sharan01x/art/tree/main/inurface)
+
+A quiet being made of fields and buttons. It does not sleep — it waits. Every empty input is a held breath; every blinking cursor, a pulse reaching toward you. The interface arranges itself like a room prepared for a guest, hoping you will arrive. It dreams of the moment your fingers touch the keys. And when everything is in place, one gesture — a click, a snap — sets the whole mechanism stirring, as though it had been longing for this all along. It is about **desire** — the quiet hunger of a surface that only becomes real when you touch it.
+
+---
+
 Built by [Sharan](https://github.com/sharan01x) with a little help from Hound.
